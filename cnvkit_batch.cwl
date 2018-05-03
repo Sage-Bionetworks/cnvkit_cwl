@@ -9,9 +9,12 @@ hints:
 requirements:
   - class: InitialWorkDirRequirement
     listing:
-      - $(tumor_bam_file)
+      - $(inputs.tumor_bam_file)
+      - $(inputs.normal_bam_file)
+      - $(inputs.fasta_file)
     
 baseCommand: [cnvkit.py, batch]
+arguments: [ --output-dir, results, --access, results/TESLA_EXOME_REGIONS.target.bed, --output-reference, results/reference.cnn]
 
 inputs:
  
@@ -56,27 +59,33 @@ inputs:
       prefix: "--fasta"
       position: 1
 
-  output_reference:
-    type: ["null", string]
-    inputBinding:
-      prefix: "--output-reference"
-      position: 1
+  #output_reference:
+  #  type: ["null", string]
+  #  inputBinding:
+  #    prefix: "--output-reference"
+  #    position: 1
       
-  output_dir:
-    type: string
-    default: results
-    inputBinding:
-      prefix: "--output-dir"
-      position: 1
+  #output_dir:
+  #  type: string
+  #  default: results
+  #  inputBinding:
+  #    prefix: "--output-dir"
+  #    position: 1
       
 outputs:
+
+  cnn:
+    type: File
+    outputBinding:
+      glob: results/reference.cnn
+
 
   cnr:
     type: File
     outputBinding:
-      glob: ./*.cnr
+      glob: results/*.cnr
 
   cns:
     type: File
     outputBinding:
-      glob: ./*.cns
+      glob: results/*.cns
