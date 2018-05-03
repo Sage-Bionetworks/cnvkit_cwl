@@ -5,6 +5,11 @@ class: CommandLineTool
 hints:
   DockerRequirement:
     dockerPull: etal/cnvkit
+
+requirements:
+  - class: InitialWorkDirRequirement
+    listing:
+      - $(tumor_bam_file)
     
 baseCommand: [cnvkit.py, batch]
 
