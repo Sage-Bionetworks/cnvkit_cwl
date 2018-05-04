@@ -14,7 +14,7 @@ requirements:
       - $(inputs.fasta_file)
     
 baseCommand: [cnvkit.py, batch]
-arguments: [ --output-dir, results, --access, results/TESLA_EXOME_REGIONS.target.bed, --output-reference, results/reference.cnn]
+arguments: [ --output-dir, results, --access, results/target.target.bed, --output-reference, results/reference.cnn]
 
 inputs:
  
