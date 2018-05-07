@@ -11,9 +11,10 @@ create_cnvkit_batch_yaml <- function(
     reference_file = NULL,
     fasta_file = NULL,
     output_reference = NULL,
-    output_dir = NULL
+    access_file = NULL,
+    access_file_string = NULL
 ){
-    lst <- list(
+    file_list <- list(
         "tumor_bam_file" = 
             list("path" = tumor_bam_file,
                  "class" = "File"),
@@ -31,25 +32,19 @@ create_cnvkit_batch_yaml <- function(
                  "class" = "File"),
         "fasta_file" =
             list("path" =  fasta_file,
+                 "class" = "File"),
+        "access_file" =
+            list("path" =  access_file,
                  "class" = "File"))
-    lst <- purrr::discard(lst, function(item) 
+    file_list <- purrr::discard(file_list, function(item) 
         is.null(item$path))  
-    print(lst)
-
-    
-
+    other_list <- list(
+        "no_normal_bam_file" = NULL,
+        "output_reference" = output_reference,
+        "access_file_string" = access_file_string)
+    if(is.null(normal_bam_file)) other_list["no_normal_bam_file"] <- TRUE
+    other_list <- purrr::discard(other_list, is.null)
+    lst <- (c(file_list, other_list))
+    yaml::write_yaml(lst, yaml_file)
 }
 
-create_cnvkit_batch_yaml("yml", "bam")
-
-
-
-
-# lst2 <- list(
-#     "no_normal_bam_file" = NULL,
-#     "output_reference" = output_reference,
-#     "output_dir" = output_dir) 
-# if(is.null(lst$normal_bam_file)) lst["no_normal_bam_file"] <- TRUE
-# lst <- purrr::discard(lst, is.null)   
-# yml <- yaml::as.yaml(lst)
-# yaml::write_yaml(yml, yaml_file)

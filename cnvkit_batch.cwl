@@ -7,6 +7,7 @@ hints:
     dockerPull: etal/cnvkit
 
 requirements:
+  - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
       - $(inputs.tumor_bam_file)
@@ -14,7 +15,7 @@ requirements:
       - $(inputs.fasta_file)
     
 baseCommand: [cnvkit.py, batch]
-arguments: [ --output-dir, results, --access, results/target.target.bed, --output-reference, results/reference.cnn]
+arguments: [ --output-dir, results]
 
 inputs:
  
@@ -58,28 +59,32 @@ inputs:
     inputBinding:
       prefix: "--fasta"
       position: 1
-
-  #output_reference:
-  #  type: ["null", string]
-  #  inputBinding:
-  #    prefix: "--output-reference"
-  #    position: 1
       
-  #output_dir:
-  #  type: string
-  #  default: results
-  #  inputBinding:
-  #    prefix: "--output-dir"
-  #    position: 1
+  access_file:
+    type: ["null", File]
+    inputBinding:
+      prefix: "--access"
+      position: 1
+      
+  access_file_string:
+    type: ["null", string]
+    inputBinding:
+      prefix: "--access"
+      position: 1
+
+  output_reference_string:
+    type: ["null", string]
+    inputBinding:
+      prefix: "--output-reference"
+      position: 1
       
 outputs:
 
   cnn:
     type: File
     outputBinding:
-      glob: results/reference.cnn
-
-
+      glob: ("results/" + inputs.src.path)
+      
   cnr:
     type: File
     outputBinding:
