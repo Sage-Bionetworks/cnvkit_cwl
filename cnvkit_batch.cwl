@@ -13,12 +13,12 @@ requirements:
       - $(inputs.tumor_bam_file)
       - $(inputs.normal_bam_file)
       - $(inputs.fasta_file)
-    
+
 baseCommand: [cnvkit.py, batch]
 arguments: [ --output-dir, results]
 
 inputs:
- 
+
   tumor_bam_file:
     type: File
     inputBinding:
@@ -47,40 +47,34 @@ inputs:
     inputBinding:
       prefix: "--antitargets"
       position: 1
-      
+
   reference_file:
     type: ["null", File]
     inputBinding:
       prefix: "--annotate"
       position: 1
-      
+
   fasta_file:
     type: ["null", File]
     inputBinding:
       prefix: "--fasta"
       position: 1
-      
+
   access_file:
     type: ["null", File]
     inputBinding:
       prefix: "--access"
       position: 1
       
-  access_file_string:
-    type: ["null", string]
-    inputBinding:
-      prefix: "--access"
-      position: 1
-
   output_reference_string:
     type: string
     default: "reference.cnn"
     inputBinding:
       prefix: "--output-reference"
       position: 1
-      
+
 outputs:
-     
+
   cnr:
     type: File
     outputBinding:
