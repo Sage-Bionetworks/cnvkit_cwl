@@ -73,18 +73,14 @@ inputs:
       position: 1
 
   output_reference_string:
-    type: ["null", string]
+    type: string
+    default: "reference.cnn"
     inputBinding:
       prefix: "--output-reference"
       position: 1
       
 outputs:
-
-  cnn:
-    type: File
-    outputBinding:
-      glob: ("results/" + inputs.src.path)
-      
+     
   cnr:
     type: File
     outputBinding:
@@ -94,3 +90,18 @@ outputs:
     type: File
     outputBinding:
       glob: results/*.cns
+
+  cnn:
+    type: File
+    outputBinding:
+      glob: $("results/" + output_reference_string)
+
+  targets: 
+    type: File
+    outputBinding:
+      glob: results/*.target.bed
+      
+  antitargets: 
+    type: File
+    outputBinding:
+      glob: results/*.antitarget.bed
