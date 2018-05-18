@@ -25,7 +25,7 @@ inputs:
       position: 1
       
   short_names:
-    type: boolean
+    type: ["null", boolean]
     inputBinding:
       prefix: "--short-names"
       position: 1
