@@ -6,10 +6,14 @@ hints:
   DockerRequirement:
     dockerPull: etal/cnvkit
 
-baseCommand: [cnvkit.py, autobin]
-
 requirements:
   - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - $(inputs.normal_bam_files)
+
+baseCommand: [cnvkit.py, autobin]
+
 
 inputs:
 
