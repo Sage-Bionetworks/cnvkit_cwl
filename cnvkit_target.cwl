@@ -31,7 +31,7 @@ inputs:
       position: 1
 
   splits:
-    type: boolean
+    type: ["null", boolean]
     inputBinding:
       prefix: "--split"
       position: 1
