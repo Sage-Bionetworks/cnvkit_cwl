@@ -42,4 +42,4 @@ outputs:
   output_bed:
     type: File
     outputBinding:
-      glob: (inputs.output)
+      glob: $(inputs.output)
