@@ -90,12 +90,12 @@ outputs:
     outputBinding:
       glob: $("results/" + input.output_reference_string)
 
-  targets:
+  targets: 
     type: File
     outputBinding:
       glob: results/*.target.bed
-
-  antitargets:
+      
+  antitargets: 
     type: File
     outputBinding:
       glob: results/*.antitarget.bed
