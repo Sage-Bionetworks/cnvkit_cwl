@@ -30,11 +30,11 @@ inputs:
       prefix: "--exclude"
       position: 1
       
-  output_reference:
+  output:
     type: string
     default: "output_reference.bed"
     inputBinding:
-      prefix: "--output-reference"
+      prefix: "--output"
       position: 1
 
 outputs:
