@@ -28,6 +28,18 @@ outputs:
   four: 
     type: File
     outputSource: [dl_reference_file/output]
+
+  five: 
+    type: File
+    outputSource: [dl_fasta_file/output]
+
+  six: 
+    type: File
+    outputSource: [gunzip_fasta_file/output]
+
+  seven: 
+    type: File
+    outputSource: [gunzip_targets_file/output]
   
 
 steps:
@@ -59,3 +71,22 @@ steps:
       config_file: synapse_config_file
       synapse_id: reference_synapse_id 
     out: [output]
+
+  dl_fasta_file:
+    run: ../misc_cwl/wget.cwl
+    in: 
+      url: fasta_url
+    out: [output]
+
+  gunzip_fasta_file:
+    run: ../misc_cwl/gunzip.cwl
+    in: 
+      input: dl_fasta_file/output
+    out: [output]
+
+  gunzip_targets_file:
+    run: ../misc_cwl/gunzip.cwl
+    in: 
+      input: dl_targets_file/output
+    out: [output]
+
