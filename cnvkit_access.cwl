@@ -32,7 +32,7 @@ inputs:
       
   output:
     type: string
-    default: "output_reference.bed"
+    default: "access.bed"
     inputBinding:
       prefix: "--output"
       position: 1
