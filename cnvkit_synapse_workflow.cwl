@@ -13,26 +13,6 @@ inputs:
   
 outputs:
   
-  one: 
-    type: File
-    outputSource: [dl_tumor_bam_file/output]
-
-  two: 
-    type: File
-    outputSource: [dl_normal_bam_file/output]
-
-  three: 
-    type: File
-    outputSource: [dl_targets_file/output]
-
-  four: 
-    type: File
-    outputSource: [dl_reference_file/output]
-
-  five: 
-    type: File
-    outputSource: [dl_fasta_file/output]
-
   six: 
     type: File
     outputSource: [gunzip_fasta_file/output]
