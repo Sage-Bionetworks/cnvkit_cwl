@@ -4,6 +4,7 @@ class: Workflow
 
 inputs:
 
+  synapse_config_file: File
   tumor_bam_synapse_id: string
   normal_bam_synapse_id: string
   targets_synapse_id: string
@@ -34,23 +35,27 @@ steps:
   dl_tumor_bam_file:
     run: ../synapse_python_client_cwl/syn_get.cwl
     in: 
+      config_file: synapse_config_file
       synapse_id: tumor_bam_synapse_id
     out: [output]
     
   dl_normal_bam_file:
     run: ../synapse_python_client_cwl/syn_get.cwl
     in: 
+      config_file: synapse_config_file
       synapse_id: normal_bam_synapse_id
     out: [output]
     
   dl_targets_file:
     run: ../synapse_python_client_cwl/syn_get.cwl
     in: 
+      config_file: synapse_config_file
       synapse_id: targets_synapse_id
     out: [output]
     
   dl_reference_file:
     run: ../synapse_python_client_cwl/syn_get.cwl
     in: 
+      config_file: synapse_config_file
       synapse_id: reference_synapse_id 
     out: [output]
