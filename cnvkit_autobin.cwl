@@ -49,9 +49,9 @@ outputs:
   targets: 
     type: File
     outputBinding:
-      glob: *.target.bed
+      glob: ./*.target.bed
       
   antitargets: 
     type: File
     outputBinding:
-      glob: *.antitarget.bed
+      glob: ./*.antitarget.bed
