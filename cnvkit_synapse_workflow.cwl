@@ -13,14 +13,6 @@ inputs:
   
 outputs:
   
-  six: 
-    type: File
-    outputSource: [gunzip_fasta_file/output]
-
-  seven: 
-    type: File
-    outputSource: [gunzip_targets_file/output]
-  
 
 steps:
   
@@ -69,4 +61,5 @@ steps:
     in: 
       input: dl_targets_file/output
     out: [output]
+
 
