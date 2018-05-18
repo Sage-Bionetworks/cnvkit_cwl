@@ -10,17 +10,15 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - $(inputs.normal_bam_files)
+      - $(inputs.normal_bam_file)
 
 baseCommand: [cnvkit.py, autobin]
 
 
 inputs:
 
-  normal_bam_files:
-    type:
-      type: array
-      items: File
+  normal_bam_file:
+    type: File
     inputBinding:
       position: 0
   
