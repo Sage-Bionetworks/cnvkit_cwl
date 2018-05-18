@@ -14,8 +14,9 @@ requirements:
 inputs:
 
   normal_bam_files:
-    type: array
-      type: File
+    type:
+      type: array
+      items: File
     inputBinding:
       position: 0
   
