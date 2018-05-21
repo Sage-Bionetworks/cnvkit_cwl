@@ -9,10 +9,29 @@ inputs:
   normal_bam_synapse_id: string
   targets_synapse_id: string
   reference_synapse_id: string
-  fasta_url: string
+  fasta_synapse_id: string
   
 outputs:
   
+  fasta_file:
+    type: File
+    outputSource: gunzip_fasta_file/output
+
+  targets_file:
+    type: File
+    outputSource: gunzip_targets_file/output
+
+  tumor_bam_file:
+    type: File
+    outputSource: dl_tumor_bam_file/output
+    
+  normal_bam_file:
+    type: File
+    outputSource: dl_normal_bam_file/output
+
+  reference_file:
+    type: File
+    outputSource: dl_reference_file/output
 
 steps:
   
@@ -45,9 +64,10 @@ steps:
     out: [output]
 
   dl_fasta_file:
-    run: ../misc_cwl/wget.cwl
+    run: ../synapse_python_client_cwl/syn_get.cwl
     in: 
-      url: fasta_url
+      config_file: synapse_config_file
+      synapse_id: fasta_synapse_id
     out: [output]
 
   gunzip_fasta_file:
