@@ -106,18 +106,18 @@ steps:
 
   batch_workflow:
     run: cnvkit_workflow.cwl
-    in: 
-       fasta_file: gunzip_fasta_file/output
-       targets_file: gunzip_targets_file/output
-       tumor_bam_file: dl_tumor_bam_file/output
-       normal_bam_file: dl_normal_bam_file/output
-       reference_file: dl_reference_file/output
+    in:
+      fasta_file: gunzip_fasta_file/output
+      targets_file: gunzip_targets_file/output
+      tumor_bam_file: dl_tumor_bam_file/output
+      normal_bam_file: dl_normal_bam_file/output
+      reference_file: dl_reference_file/output
     out: [cnr, cnn, cns]
     
   make_manifest:
     run: ../synapse_python_client_cwl/yaml_to_manifest.cwl
     in: 
-      yaml_config_file
+      yaml_config_file:yaml_config_file
     out: [output]
 
 
