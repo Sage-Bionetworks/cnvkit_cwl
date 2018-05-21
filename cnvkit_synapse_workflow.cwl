@@ -82,4 +82,14 @@ steps:
       input: dl_targets_file/output
     out: [output]
 
+  batch_workflow:
+    run: cnvkit_workflow.cwl
+    in: 
+       fasta_file: gunzip_fasta_file/output
+       targets_file: gunzip_targets_file/output
+       tumor_bam_file: dl_tumor_bam_file/output
+       normal_bam_file: dl_normal_bam_file/output
+       reference_file: dl_reference_file/output
+    out: [cnr, cnn, cns]
+
 
