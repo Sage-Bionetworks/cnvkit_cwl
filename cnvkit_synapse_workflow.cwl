@@ -8,11 +8,13 @@ requirements:
 inputs:
 
   synapse_config_file: File
+  yaml_config_file: File
   tumor_bam_synapse_id: string
   normal_bam_synapse_id: string
   targets_synapse_id: string
   reference_synapse_id: string
   fasta_synapse_id: string
+  
   
 outputs:
   
@@ -35,6 +37,23 @@ outputs:
   reference_file:
     type: File
     outputSource: dl_reference_file/output
+
+  cnn_file:
+    type: File
+    outputSource: batch_workflow/cnn
+    
+  cnr_file:
+    type: File
+    outputSource: batch_workflow/cnr
+
+  cns_file:
+    type: File
+    outputSource: batch_workflow/cns
+
+  manifest_file:
+    type: File
+    outputSource: make_manifest/output
+
 
 steps:
   
@@ -94,5 +113,11 @@ steps:
        normal_bam_file: dl_normal_bam_file/output
        reference_file: dl_reference_file/output
     out: [cnr, cnn, cns]
+    
+  make_manifest:
+    run: ../synapse_python_client_cwl/make_manifest_file.cwl
+    in: 
+      yaml_config_file
+    out: [output]
 
 
