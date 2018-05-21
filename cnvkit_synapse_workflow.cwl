@@ -115,7 +115,7 @@ steps:
     out: [cnr, cnn, cns]
     
   make_manifest:
-    run: ../synapse_python_client_cwl/make_manifest_file.cwl
+    run: ../synapse_python_client_cwl/yaml_to_manifest.cwl
     in: 
       yaml_config_file
     out: [output]
