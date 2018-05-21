@@ -2,6 +2,9 @@
 cwlVersion: v1.0
 class: Workflow
 
+requirements:
+- class: SubworkflowFeatureRequirement
+
 inputs:
 
   synapse_config_file: File
