@@ -88,4 +88,4 @@ outputs:
   cnn:
     type: File
     outputBinding:
-      glob: $("results/" + input.output_reference_string)
+      glob: $(input.output_reference_string)
