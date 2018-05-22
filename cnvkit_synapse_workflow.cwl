@@ -50,11 +50,6 @@ outputs:
     type: File
     outputSource: batch_workflow/cns
 
-  manifest_file:
-    type: File
-    outputSource: make_manifest/output
-
-
 steps:
   
   dl_tumor_bam_file:
@@ -113,11 +108,5 @@ steps:
       normal_bam_file: dl_normal_bam_file/output
       reference_file: dl_reference_file/output
     out: [cnr, cnn, cns]
-    
-  make_manifest:
-    run: ../synapse_python_client_cwl/yaml_to_manifest.cwl
-    in: 
-      yaml_config_file:yaml_config_file
-    out: [output]
 
 
