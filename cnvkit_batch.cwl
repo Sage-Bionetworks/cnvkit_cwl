@@ -68,7 +68,7 @@ inputs:
       
   output_reference_string:
     type: string
-    default: "reference.cnn"
+    default: "results/reference.cnn"
     inputBinding:
       prefix: "--output-reference"
       position: 1
@@ -84,8 +84,3 @@ outputs:
     type: File
     outputBinding:
       glob: results/*.cns
-
-  cnn:
-    type: File
-    outputBinding:
-      glob: $(input.output_reference_string)

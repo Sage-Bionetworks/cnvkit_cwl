@@ -37,10 +37,6 @@ outputs:
   reference_file:
     type: File
     outputSource: dl_reference_file/output
-
-  cnn_file:
-    type: File
-    outputSource: batch_workflow/cnn
     
   cnr_file:
     type: File
@@ -107,6 +103,6 @@ steps:
       tumor_bam_file: dl_tumor_bam_file/output
       normal_bam_file: dl_normal_bam_file/output
       reference_file: dl_reference_file/output
-    out: [cnr, cnn, cns]
+    out: [cnr, cns]
 
 

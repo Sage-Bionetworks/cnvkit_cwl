@@ -19,11 +19,7 @@ outputs:
   cns:
     type: File
     outputSource: batch/cns
-
-  cnn:
-    type: File
-    outputSource: batch/cnn
-
+    
 steps:
 
   access:
@@ -41,4 +37,4 @@ steps:
       reference_file: reference_file
       fasta_file: fasta_file
       access_file: access/output_bed
-    out: [cnr, cns, cnn]
+    out: [cnr, cns]
