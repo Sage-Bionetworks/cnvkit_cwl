@@ -9,6 +9,12 @@ inputs:
   targets_file: File
   reference_file: File
   fasta_file: File
+  tumor_purity: float
+  call_method: string
+  segmetrics_std: ["null", boolean]
+  segmetrics_mad: ["null", boolean]
+  segmetrics_sem: ["null", boolean]
+  segmetrics_ci: ["null", boolean]
  
 outputs:
 
@@ -18,7 +24,7 @@ outputs:
 
   cns:
     type: File
-    outputSource: batch/cns
+    outputSource: call/output
     
 steps:
 
@@ -38,3 +44,29 @@ steps:
       fasta_file: fasta_file
       access_file: access/output_bed
     out: [cnr, cns]
+
+  call:
+    run: cnvkit_call.cwl
+    in: 
+      cns_file: batch/cns
+      purity: tumor_purity
+      method: call_method
+    out: [output]
+
+  metrics:
+    run: cnvkit_metrics.cwl
+    in: 
+      cns_file: call/output
+      cnr_file: batch/cnr
+    out: [output]
+
+  segmetrics:
+    run: cnvkit_segmetrics.cwl
+    in: 
+      cns_file: call/output
+      cnr_file: batch/cnr
+      std: segmetrics_std
+      mad: segmetrics_mad
+      sem: segmetrics_sem
+      confint: segmetrics_ci
+    out: [output]
