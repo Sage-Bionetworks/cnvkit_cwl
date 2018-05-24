@@ -18,13 +18,21 @@ inputs:
  
 outputs:
 
-  cnr:
+  cnr_file:
     type: File
     outputSource: batch/cnr
 
-  cns:
+  cns_file:
     type: File
     outputSource: call/output
+    
+  metrics_file:
+    type: File
+    outputSource: metrics/output
+
+  segmetrics_file:
+    type: File
+    outputSource: segmetrics/output
     
 steps:
 
