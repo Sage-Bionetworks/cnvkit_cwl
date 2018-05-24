@@ -18,10 +18,10 @@ create_cnvkit_synapse_workflow_yaml <- function(
     
     tumor_purity,
     call_method = "clonal", 
-    segmetrics_std = T,
-    segmetrics_mad = T,
-    segmetrics_sem = T,
-    segmetrics_ci = T,
+    segmetrics_std = "True",
+    segmetrics_mad = "True",
+    segmetrics_sem = "True",
+    segmetrics_ci = "True",
     annotations = NULL
 ){
     file_list <- list(
@@ -54,6 +54,10 @@ create_cnvkit_synapse_workflow_yaml <- function(
     other_list <- purrr::discard(other_list, is.null)
     lst <- (c(file_list, other_list))
     yaml::write_yaml(lst, yaml_file)
+    yaml_file %>% 
+        readLines %>% 
+        str_replace_all('yes', 'True') %>% 
+        writeLines(yaml_file)
 }
 
 
