@@ -4,47 +4,41 @@ class: Workflow
 
 requirements:
 - class: SubworkflowFeatureRequirement
+- class: InlineJavascriptRequirement
 
 inputs:
-
+ 
+  # config files
   synapse_config_file: File
   yaml_config_file: File
+  
+  # synapse ids
+  upload_id: string
   tumor_bam_synapse_id: string
   normal_bam_synapse_id: string
   targets_synapse_id: string
   reference_synapse_id: string
   fasta_synapse_id: string
   
+  # cnvkit parameters
+  tumor_purity: float
+  call_method: string
+  segmetrics_std: ["null", boolean]
+  segmetrics_mad: ["null", boolean]
+  segmetrics_sem: ["null", boolean]
+  segmetrics_ci: ["null", boolean]
+  
+  # output names
+  output_cns_name: string
+  output_cnr_name: string
+  output_metrics_name: string
+  output_segmetrics_name: string
   
 outputs:
-  
-  fasta_file:
-    type: File
-    outputSource: gunzip_fasta_file/output
 
-  targets_file:
+  manifest:
     type: File
-    outputSource: gunzip_targets_file/output
-
-  tumor_bam_file:
-    type: File
-    outputSource: dl_tumor_bam_file/output
-    
-  normal_bam_file:
-    type: File
-    outputSource: dl_normal_bam_file/output
-
-  reference_file:
-    type: File
-    outputSource: dl_reference_file/output
-    
-  cnr_file:
-    type: File
-    outputSource: batch_workflow/cnr
-
-  cns_file:
-    type: File
-    outputSource: batch_workflow/cns
+    outputSource: sync_to_synapse/output
 
 steps:
   
@@ -103,6 +97,59 @@ steps:
       tumor_bam_file: dl_tumor_bam_file/output
       normal_bam_file: dl_normal_bam_file/output
       reference_file: dl_reference_file/output
-    out: [cnr, cns]
+      tumor_purity: tumor_purity
+      call_method: call_method
+      segmetrics_std: segmetrics_std
+      segmetrics_mad: segmetrics_mad
+      segmetrics_sem: segmetrics_sem
+      segmetrics_ci: segmetrics_ci
+    out: [cnr_file, cns_file, metrics_file, segmetrics_file]
 
+  rename_cnr:
+    run: ../misc_cwl/rename.cwl
+    in: 
+      input_file: batch_workflow/cnr_file
+      output_string: output_cnr_name
+    out: [output_file]
+    
+  rename_cns:
+    run: ../misc_cwl/rename.cwl
+    in: 
+      input_file: batch_workflow/cns_file
+      output_string: output_cns_name
+    out: [output_file]
 
+  rename_metrics:
+    run: ../misc_cwl/rename.cwl
+    in: 
+      input_file: batch_workflow/metrics_file
+      output_string: output_metrics_name
+    out: [output_file]
+
+  rename_segmetrics:
+    run: ../misc_cwl/rename.cwl
+    in: 
+      input_file: batch_workflow/segmetrics_file
+      output_string: output_segmetrics_name
+    out: [output_file]
+    
+  sync_to_synapse:
+    run: sync_to_synapse.cwl
+    in: 
+      synapse_config_file: synapse_config_file
+      yaml_config_file: yaml_config_file
+      
+      upload_id: upload_id
+      
+      cnr_file: rename_cnr/output_file
+      cns_file: rename_cns/output_file
+      metrics_file: rename_metrics/output_file
+      segmetrics_file: rename_segmetrics/output_file
+      
+      tumor_bam_synapse_id: tumor_bam_synapse_id
+      normal_bam_synapse_id: normal_bam_synapse_id
+      targets_synapse_id: targets_synapse_id
+      reference_synapse_id: reference_synapse_id
+      fasta_synapse_id: fasta_synapse_id
+      
+    out: [output]

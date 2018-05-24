@@ -1,50 +1,63 @@
 require(yaml)
 require(purrr)
 
-
-create_cnvkit_batch_yaml <- function(
+create_cnvkit_synapse_workflow_yaml <- function(
     yaml_file,
-    tumor_bam_file,
-    normal_bam_file = NULL,
-    targets_file = NULL,
-    anti_targets_file = NULL,
-    reference_file = NULL,
-    fasta_file = NULL,
-    output_reference = NULL,
-    access_file = NULL,
-    access_file_string = NULL
+    synapse_config_file,
+    upload_id,
+    tumor_bam_synapse_id,
+    normal_bam_synapse_id,
+    targets_synapse_id,
+    reference_synapse_id,
+    fasta_synapse_id,
+    
+    output_cns_name,
+    output_cnr_name,
+    output_metrics_name,
+    output_segmetrics_name,
+    
+    tumor_purity,
+    call_method = "clonal", 
+    segmetrics_std = T,
+    segmetrics_mad = T,
+    segmetrics_sem = T,
+    segmetrics_ci = T,
+    annotations = NULL
 ){
     file_list <- list(
-        "tumor_bam_file" = 
-            list("path" = tumor_bam_file,
-                 "class" = "File"),
-        "normal_bam_file" = 
-            list("path" = normal_bam_file,
-                 "class" = "File"),
-        "targets_file" = 
-            list("path" = targets_file,
-                 "class" = "File"),
-        "anti_targets_file" = 
-            list("path" = anti_targets_file,
-                 "class" = "File"),
-        "reference_file" = 
-            list("path" = reference_file,
-                 "class" = "File"),
-        "fasta_file" =
-            list("path" =  fasta_file,
-                 "class" = "File"),
-        "access_file" =
-            list("path" =  access_file,
-                 "class" = "File"))
+        "synapse_config_file" = file_to_yaml_file(synapse_config_file),
+        "yaml_config_file" = file_to_yaml_file(yaml_file))
+    other_list <- list(
+        "upload_id" = upload_id,
+        "tumor_bam_synapse_id" = tumor_bam_synapse_id,
+        "normal_bam_synapse_id" = normal_bam_synapse_id,
+        "targets_synapse_id" = targets_synapse_id,
+        "reference_synapse_id" = reference_synapse_id,
+        "fasta_synapse_id" = fasta_synapse_id,
+        
+        "output_cns_name" = output_cns_name,
+        "output_cnr_name" = output_cnr_name,
+        "output_metrics_name" = output_metrics_name,
+        "output_segmetrics_name" = output_segmetrics_name,
+        
+        "tumor_purity" = tumor_purity,
+        "call_method" = call_method, 
+        "segmetrics_std" = segmetrics_std,
+        "segmetrics_mad" = segmetrics_mad,
+        "segmetrics_sem" = segmetrics_sem,
+        "segmetrics_ci" = segmetrics_ci,
+        "annotations" = annotations)
+    
+    
     file_list <- purrr::discard(file_list, function(item) 
         is.null(item$path))  
-    other_list <- list(
-        "no_normal_bam_file" = NULL,
-        "output_reference" = output_reference,
-        "access_file_string" = access_file_string)
-    if(is.null(normal_bam_file)) other_list["no_normal_bam_file"] <- TRUE
     other_list <- purrr::discard(other_list, is.null)
     lst <- (c(file_list, other_list))
     yaml::write_yaml(lst, yaml_file)
+}
+
+
+file_to_yaml_file <- function(file){
+    list("path" = file, "class" = "File")
 }
 
